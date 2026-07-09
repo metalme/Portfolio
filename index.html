@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portafolio web de Brayan Alexander Rincón Martínez, desarrollador de software en formación."
+    />
+    <title>Brayan Alexander Rincón Martínez | Portafolio</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <svg class="svg-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m3 11 9-8 9 8" />
+        <path d="M5 10v10h5v-6h4v6h5V10" />
+      </symbol>
+      <symbol id="icon-briefcase" viewBox="0 0 24 24">
+        <path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1" />
+        <path d="M4 7h16v13H4z" />
+        <path d="M4 12h16" />
+        <path d="M9 12v2h6v-2" />
+      </symbol>
+      <symbol id="icon-education" viewBox="0 0 24 24">
+        <path d="m3 8 9-5 9 5-9 5z" />
+        <path d="M7 10v5c0 2 2 4 5 4s5-2 5-4v-5" />
+      </symbol>
+      <symbol id="icon-folder" viewBox="0 0 24 24">
+        <path d="M3 6h7l2 3h9v10H3z" />
+      </symbol>
+      <symbol id="icon-award" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" />
+        <path d="m8 14-2 7 6-3 6 3-2-7" />
+      </symbol>
+      <symbol id="icon-send" viewBox="0 0 24 24">
+        <path d="m21 3-7 18-4-8-7-3z" />
+        <path d="m21 3-11 10" />
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path d="M4 5h16v14H4z" />
+        <path d="m4 7 8 6 8-6" />
+      </symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24">
+        <path d="M12 3v12" />
+        <path d="m7 10 5 5 5-5" />
+        <path d="M5 21h14" />
+      </symbol>
+      <symbol id="icon-code" viewBox="0 0 24 24">
+        <path d="m8 8-4 4 4 4" />
+        <path d="m16 8 4 4-4 4" />
+        <path d="m14 4-4 16" />
+      </symbol>
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 12h9" />
+        <path d="m18 6 3-3" />
+      </symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3" />
+        <circle cx="17" cy="10" r="2.5" />
+        <path d="M3 19c1-4 4-6 6-6s5 2 6 6" />
+        <path d="M14 16c1-2 3-3 5-3s3 1 4 3" />
+      </symbol>
+      <symbol id="icon-brain" viewBox="0 0 24 24">
+        <path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 3 3 3 0 0 0 2 3v1a3 3 0 0 0 3 3" />
+        <path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 3 3 3 0 0 1-2 3v1a3 3 0 0 1-3 3" />
+        <path d="M9 4v16" />
+        <path d="M15 4v16" />
+        <path d="M9 10h6" />
+        <path d="M9 14h6" />
+      </symbol>
+      <symbol id="icon-monitor-code" viewBox="0 0 24 24">
+        <path d="M3 5h18v12H3z" />
+        <path d="M8 21h8" />
+        <path d="M12 17v4" />
+        <path d="m10 9-2 2 2 2" />
+        <path d="m14 9 2 2-2 2" />
+      </symbol>
+      <symbol id="icon-headset" viewBox="0 0 24 24">
+        <path d="M4 13a8 8 0 0 1 16 0" />
+        <path d="M4 13v4a2 2 0 0 0 2 2h2v-6H6a2 2 0 0 0-2 2" />
+        <path d="M20 13v4a2 2 0 0 1-2 2h-2v-6h2a2 2 0 0 1 2 2" />
+        <path d="M14 21h-3" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 20h16" />
+        <path d="M6 17v-5" />
+        <path d="M12 17V8" />
+        <path d="M18 17V5" />
+        <path d="m14 7 4-4 3 3" />
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="m13 6 6 6-6 6" />
+      </symbol>
+      <symbol id="icon-github" viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 0 0-3 19" />
+        <path d="M15 21a10 10 0 0 0 7-9 10 10 0 0 0-10-10" />
+        <path d="M9 18v-2c-3 1-4-1-5-3" />
+        <path d="M15 18v-3c0-1-.3-1.8-1-2.3 3-.3 5-1.5 5-5.2 0-1.2-.4-2.2-1.1-3" />
+      </symbol>
+    </svg>
+
+    <div class="portfolio-shell">
+      <aside class="sidebar" aria-label="Navegacion del portafolio">
+        <a class="brand" href="#inicio" aria-label="Inicio">
+          <span>B</span><span>R</span>
+        </a>
+        <span class="brand-dot" aria-hidden="true"></span>
+
+        <nav class="side-nav">
+          <a class="side-link is-active" href="#inicio">
+            <svg class="icon"><use href="#icon-home" /></svg>
+            <span>Inicio</span>
+          </a>
+          <a class="side-link" href="#experiencia">
+            <svg class="icon"><use href="#icon-briefcase" /></svg>
+            <span>Experiencia</span>
+          </a>
+          <a class="side-link" href="#educacion">
+            <svg class="icon"><use href="#icon-education" /></svg>
+            <span>Educación</span>
+          </a>
+          <a class="side-link" href="#proyectos">
+            <svg class="icon"><use href="#icon-folder" /></svg>
+            <span>Proyectos</span>
+          </a>
+          <a class="side-link" href="#certificaciones">
+            <svg class="icon"><use href="#icon-award" /></svg>
+            <span>Certificaciones</span>
+          </a>
+        </nav>
+
+        <div class="theme-control" aria-label="Cambiar tema">
+          <span aria-hidden="true">☾</span>
+          <button class="theme-toggle" type="button" aria-label="Cambiar tema">
+            <span></span>
+          </button>
+          <span aria-hidden="true">☼</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-actions" aria-label="Enlaces rapidos">
+          <a class="social-link" href="https://github.com/metalme" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg class="icon"><use href="#icon-github" /></svg>
+          </a>
+          <a class="social-link social-text" href="https://www.linkedin.com/in/brayan-rincon-tech" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+          <a class="social-link" href="mailto:brayanrincon069@gmail.com" aria-label="Correo electrónico">
+            <svg class="icon"><use href="#icon-mail" /></svg>
+          </a>
+          <a class="download-button" href="assets/documents/Brayan Alexander Rincon Martinez.pdf" download aria-label="Descargar CV">
+            <svg class="icon"><use href="#icon-download" /></svg>
+            Descargar CV
+          </a>
+        </header>
+
+        <section class="hero-section" id="inicio">
+          <div class="hero-copy">
+            <p class="role-pill">Desarrollador de Software en Formación</p>
+            <h1 aria-label="Brayan Alexander Rincón Martínez">
+              <span class="name-line">Brayan Alexander</span>
+              <span class="name-line name-line-accent">Rincón Martínez</span>
+            </h1>
+            <div class="hero-divider"></div>
+
+            <div class="profile-summary">
+              <div class="profile-icon" aria-hidden="true">
+                <svg class="icon"><use href="#icon-code" /></svg>
+              </div>
+              <div>
+                <h2>Desarrollador de Software en Formación</h2>
+                <p>Soporte TI <span></span> Resolución de Problemas <span></span> Desarrollo Web</p>
+              </div>
+            </div>
+
+            <p class="intro">
+              Apasionado por la tecnología y el desarrollo de software. Me
+              encuentro en constante aprendizaje para crear soluciones que
+              generen valor y marcar la diferencia.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-action" href="#proyectos">
+                Ver mis proyectos
+                <svg class="icon"><use href="#icon-arrow" /></svg>
+              </a>
+              <a class="secondary-action" href="#experiencia">
+                Experiencias
+                <svg class="icon"><use href="#icon-arrow" /></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Retrato de Brayan Alexander">
+            <div class="orbital-lines" aria-hidden="true"></div>
+            <img
+              src="assets/img/brayan-hero.png"
+              alt="Brayan Alexander Rincón Martínez"
+            />
+          </div>
+        </section>
+
+        <section class="skills-strip" aria-label="Habilidades destacadas">
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-target" /></svg>
+            </div>
+            <h3>Resolución de Problemas</h3>
+            <p>Análisis e identificación de soluciones efectivas.</p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-users" /></svg>
+            </div>
+            <h3>Trabajo en Equipo</h3>
+            <p>Colaboración para alcanzar objetivos.</p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-brain" /></svg>
+            </div>
+            <h3>Pensamiento Analítico</h3>
+            <p>Toma de decisiones basadas en datos.</p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-monitor-code" /></svg>
+            </div>
+            <h3>Desarrollo de Software</h3>
+            <p>Lógica de programación y desarrollo web.</p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-headset" /></svg>
+            </div>
+            <h3>Atención y Comunicación</h3>
+            <p>Escucha activa y comunicación clara.</p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">
+              <svg class="icon"><use href="#icon-chart" /></svg>
+            </div>
+            <h3>Aprendizaje Continuo</h3>
+            <p>Adaptación rápida a nuevas tecnologías.</p>
+          </article>
+        </section>
+
+        <section class="content-section" id="experiencia">
+          <div>
+            <p class="section-kicker">Trayectoria</p>
+            <h2>Experiencia</h2>
+            <p class="section-intro">Descubre mi camino profesional, aprendizajes clave y proyectos que definen mi experiencia en tecnología y servicio.</p>
+          </div>
+          <article class="experience-cta-card">
+            <p class="section-intro">He seleccionado lo más relevante de mi trayectoria para que puedas ver mis responsabilidades, crecimiento y logros en una sola página.</p>
+            <a class="primary-action" href="pages/experiencias.html">Ver experiencias</a>
+          </article>
+        </section>
+
+        <section class="content-section" id="educacion">
+          <div>
+            <p class="section-kicker">Formación</p>
+            <h2>Educación</h2>
+          </div>
+          <div class="education-stack">
+            <article class="education-card">
+              <div class="education-header">
+                <span class="badge badge-active">En curso</span>
+                <h3>Tecnólogo en Desarrollo de Software</h3>
+              </div>
+              <p class="institution">SENA – Cartagena de Indias, Colombia</p>
+              <p class="year">Fecha estimada de finalización: 2027</p>
+              <ul class="education-highlights">
+                <li>Análisis y Desarrollo de Software</li>
+                <li>Análisis y diseño de sistemas</li>
+                <li>Desarrollo de aplicaciones web y de escritorio</li>
+                <li>Diseño y administración de bases de datos</li>
+                <li>Programación orientada a objetos</li>
+                <li>Ingeniería de software y metodologías de desarrollo</li>
+                <li>Disponible para fase práctica desde 16 de junio de 2026</li>
+              </ul>
+            </article>
+
+            <article class="education-card">
+              <div class="education-header">
+                <span class="badge">Completado</span>
+                <h3>Técnico Superior en Informática</h3>
+              </div>
+              <p class="institution">Instituto Universitario de Tecnología de Administración Industrial (I.U.T.A.)</p>
+              <p class="year">Estado Miranda, Venezuela | 2020</p>
+              <ul class="education-highlights">
+                <li>Cinco semestres aprobados</li>
+                <li>Desarrollo de software</li>
+                <li>Sistemas operativos y redes</li>
+                <li>Soporte técnico</li>
+                <li>Análisis de datos</li>
+                <li>Fundamentos de programación y arquitectura de computadores</li>
+              </ul>
+            </article>
+
+            <article class="education-card">
+              <div class="education-header">
+                <span class="badge">Completado</span>
+                <h3>Bachiller en Ciencias Sociales</h3>
+              </div>
+              <p class="institution">Instituto Central de Colombia para Adultos</p>
+              <p class="year">Cartagena de Indias, Colombia | 2023</p>
+              <ul class="education-highlights">
+                <li>Validación oficial del bachillerato</li>
+                <li>Formación académica en Ciencias Sociales</li>
+              </ul>
+            </article>
+
+            <article class="education-card">
+              <div class="education-header">
+                <span class="badge">Completado</span>
+                <h3>Técnico Medio en Ciencias Sociales</h3>
+              </div>
+              <p class="institution">Instituto Medio Antonio María Piñate</p>
+              <p class="year">Estado Miranda, Venezuela | 2015</p>
+              <ul class="education-highlights">
+                <li>Culminación satisfactoria de educación media técnica</li>
+                <li>Ciencias Sociales</li>
+                <li>Competencias en investigación, análisis y comunicación</li>
+                <li>Bases en sociología y estudios sociales</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" id="proyectos">
+          <div>
+            <p class="section-kicker">Portafolio</p>
+            <h2>Proyectos</h2>
+          </div>
+
+          <div class="project-card">
+            <div class="project-card-media">
+              <img src="assets/img/Recursos_Pagina (1).png" alt="Conecta Emprendedores" />
+              <button class="gallery-toggle" type="button" aria-label="Abrir galería">+</button>
+            </div>
+            <div class="project-card-content">
+              <div class="project-chip">Proyecto destacado</div>
+              <h3>Conecta Emprendedores</h3>
+              <p class="project-summary">Diseño y desarrollo full-stack de una plataforma para vincular emprendedores con inversores, con búsqueda avanzada, gestión de usuarios y biblioteca de recursos integrada.</p>
+              <ul class="project-bullets">
+                <li>Flujo completo de registro y verificación de emprendedores e inversores.</li>
+                <li>Búsqueda avanzada con filtros inteligentes para oportunidades relevantes.</li>
+                <li>Panel de administración con moderación de usuarios y control de contenido.</li>
+                <li>Biblioteca de recursos integrada para potenciar capacitación y conexión.</li>
+              </ul>
+              <div class="project-meta">
+                <span>Full-stack Web</span>
+                <span>React • Node.js • MySQL</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="certificaciones">
+          <div>
+            <p class="section-kicker">Credenciales</p>
+            <h2>Cursos y certificaciones</h2>
+            <p class="section-intro">Capacitaciones recientes que refuerzan mi perfil en desarrollo móvil, seguridad, IA y resolución de problemas.</p>
+          </div>
+          <div class="certification-grid">
+            <article class="cert-card">
+              <div class="cert-card-head">
+                <h3>Análisis para el Desarrollo Móvil con App Inventor</h3>
+                <span>SENA</span>
+              </div>
+              <ul class="cert-bullets">
+                <li>Desarrollo de aplicaciones móviles utilizando App Inventor.</li>
+                <li>Diseño de interfaces gráficas.</li>
+                <li>Programación basada en bloques.</li>
+                <li>Desarrollo de aplicaciones Android.</li>
+                <li>Implementación de lógica de programación para dispositivos móviles.</li>
+              </ul>
+            </article>
+            <article class="cert-card">
+              <div class="cert-card-head">
+                <h3>Controles y Seguridad Informática</h3>
+                <span>SENA</span>
+              </div>
+              <ul class="cert-bullets">
+                <li>Fundamentos de seguridad informática.</li>
+                <li>Controles de acceso y protección de la información.</li>
+                <li>Gestión de riesgos informáticos.</li>
+                <li>Buenas prácticas de ciberseguridad.</li>
+                <li>Seguridad en equipos y redes.</li>
+              </ul>
+            </article>
+            <article class="cert-card">
+              <div class="cert-card-head">
+                <h3>Generative AI Prompt Engineering Basics</h3>
+                <span>Coursera • Mayo 2025 – Junio 2025</span>
+              </div>
+              <ul class="cert-bullets">
+                <li>Fundamentos de Inteligencia Artificial Generativa.</li>
+                <li>Ingeniería de prompts para modelos de IA.</li>
+                <li>Optimización de instrucciones para asistentes inteligentes.</li>
+                <li>Aplicación de IA en productividad y automatización.</li>
+                <li>Uso responsable y buenas prácticas en herramientas de IA.</li>
+              </ul>
+            </article>
+            <article class="cert-card">
+              <div class="cert-card-head">
+                <h3>Cómo Resolver Problemas y Tomar Decisiones con Eficacia</h3>
+                <span>Coursera • Mayo 2025</span>
+              </div>
+              <ul class="cert-bullets">
+                <li>Técnicas para la resolución de problemas.</li>
+                <li>Métodos de análisis y toma de decisiones.</li>
+                <li>Pensamiento crítico.</li>
+                <li>Priorización de alternativas.</li>
+                <li>Habilidades para la resolución en entornos laborales.</li>
+              </ul>
+            </article>
+            <article class="cert-card">
+              <div class="cert-card-head">
+                <h3>Hacking WiFi</h3>
+                <span>Hacker Mentor Academy • Agosto 2024</span>
+              </div>
+              <ul class="cert-bullets">
+                <li>Fundamentos de seguridad en redes inalámbricas.</li>
+                <li>Evaluación de vulnerabilidades WiFi.</li>
+                <li>Conceptos de pruebas de penetración (Pentesting).</li>
+                <li>Identificación de riesgos en redes inalámbricas.</li>
+                <li>Buenas prácticas para fortalecer la seguridad de redes WiFi.</li>
+              </ul>
+              <p class="cert-note">Nota: Este curso se enfoca en evaluación y fortalecimiento de la seguridad WiFi con fines éticos y educativos.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" id="competencias">
+          <div>
+            <p class="section-kicker">Competencias</p>
+            <h2>Competencias adquiridas mediante los cursos</h2>
+            <p class="section-intro">Este resumen recoge las habilidades clave desarrolladas con los cursos y certificaciones del portafolio.</p>
+          </div>
+          <div class="competencies-card">
+            <ul class="competency-list">
+              <li>Desarrollo de aplicaciones móviles.</li>
+              <li>Seguridad informática y ciberseguridad.</li>
+              <li>Inteligencia Artificial Generativa.</li>
+              <li>Ingeniería de prompts.</li>
+              <li>Resolución de problemas.</li>
+              <li>Toma de decisiones.</li>
+              <li>Pensamiento analítico.</li>
+              <li>Seguridad en redes inalámbricas.</li>
+              <li>Automatización mediante IA.</li>
+              <li>Buenas prácticas en protección de la información.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="galleryOverlay" class="gallery-overlay" aria-hidden="true">
+      <div class="gallery-container">
+        <button class="gallery-close" aria-label="Cerrar galería">✕</button>
+        <div class="gallery-grid">
+          <img src="assets/img/Recursos_Pagina (1).png" alt="Recurso 1" />
+          <img src="assets/img/Recursos_Pagina (2).png" alt="Recurso 2" />
+          <img src="assets/img/Recursos_Pagina (3).png" alt="Recurso 3" />
+          <img src="assets/img/Recursos_Pagina (4).png" alt="Recurso 4" />
+          <img src="assets/img/Recursos_Pagina (5).png" alt="Recurso 5" />
+          <img src="assets/img/Recursos_Pagina (6).png" alt="Recurso 6" />
+        </div>
+        <div id="lightbox" class="lightbox" aria-hidden="true">
+          <div class="lightbox-inner">
+            <button class="lightbox-close" aria-label="Cerrar imagen">✕</button>
+            <button class="lightbox-prev" aria-label="Imagen anterior">‹</button>
+            <img src="" alt="" />
+            <button class="lightbox-next" aria-label="Siguiente imagen">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

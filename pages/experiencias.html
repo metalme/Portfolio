@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiencias | Portafolio</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <style>
+      /* Estilos específicos para SkillTree integrado */
+      .skill-tree-section {
+        padding: 96px 24px 80px;
+        color: var(--muted);
+      }
+      .skill-tree-wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .skill-line-base {
+        position: absolute;
+        left: 48px;
+        top: 140px;
+        bottom: 40px;
+        width: 3px;
+        background: rgba(8, 124, 255, 0.18);
+        border-radius: 99px;
+      }
+      .skill-line-progress {
+        position: absolute;
+        left: 48px;
+        top: 140px;
+        width: 3px;
+        background: linear-gradient(180deg, #06b6d4, #3b82f6);
+        border-radius: 99px;
+        transform-origin: top;
+        transform: scaleY(0);
+        box-shadow: 0 0 18px rgba(6,182,212,0.18);
+      }
+      .skill-node {
+        position: relative;
+        padding-left: 96px;
+        margin-bottom: 56px;
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: transform 0.6s ease, opacity 0.6s ease;
+      }
+      .skill-node.revealed {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .skill-node .node-dot {
+        position: absolute;
+        left: 36px;
+        top: 12px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--bg-deep);
+        border: 2px solid var(--border);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
+      }
+      .skill-card {
+        padding: 18px;
+        border-radius: 12px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+        transition: all 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .skill-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(84, 132, 205, 0.42);
+        box-shadow: 0 26px 65px rgba(8, 124, 255, 0.18);
+      }
+      .skill-card h3 { color: var(--text); margin: 8px 0; }
+      .skill-card p { color: var(--soft); }
+      .tech-badge { display:inline-block; margin:6px 6px 0 0; padding:6px 10px; font-size:12px; border-radius:8px; background: var(--blue-soft); color: var(--text); border:1px solid rgba(84,132,205,0.1); }
+
+      /* ProfessionalGrowth column */
+      .growth-grid { display:grid; grid-template-columns: 1fr 320px; gap:28px; margin-top:42px; }
+      .perks-grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+      .perk { 
+        padding:16px; 
+        border-radius:10px; 
+        background: var(--panel); 
+        border:1px solid var(--border); 
+        color: var(--text);
+        transition: all 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .perk:hover {
+        transform: translateY(-4px);
+        border-color: rgba(84, 132, 205, 0.42);
+        box-shadow: 0 18px 50px rgba(8, 124, 255, 0.15);
+      }
+      .perk .icon { font-size:20px; margin-bottom:8px; color:var(--blue); }
+      .progress-bar { height:12px; background: var(--blue-soft); border-radius:99px; overflow:hidden; }
+      .progress-fill { height:100%; width:0%; background:linear-gradient(90deg,#10b981,#22c55e); transition: width 1s ease; }
+
+      /* Árbol de experiencias laborales */
+      .work-tree-section {
+        padding: 80px 24px 60px;
+        color: var(--muted);
+      }
+      .work-card {
+        padding:16px;
+        border-radius:11px;
+        background: var(--panel);
+        border:1px solid var(--border);
+        margin-bottom:18px;
+        transition: all 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .work-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(84, 132, 205, 0.42);
+        box-shadow: 0 26px 65px rgba(8, 124, 255, 0.18);
+      }
+      .work-card span { color: var(--blue); font-size:11px; font-weight:700; text-transform:uppercase; }
+      .work-card h4 { color:var(--text); margin:6px 0; font-size:16px; }
+      .work-card p { color:var(--soft); margin:6px 0; font-size:14px; }
+      .work-meta { font-size:13px; color:var(--muted); margin-top:8px; }
+      .work-card ul { margin:12px 0; padding-left:20px; }
+      .work-card li { color:var(--soft); font-size:14px; margin-bottom:6px; line-height:1.5; }
+
+      @media (max-width: 900px) {
+        .skill-tree-wrap { padding: 0 12px; }
+        .skill-line-base, .skill-line-progress { left: 28px; }
+        .skill-node { padding-left: 72px; }
+        .growth-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reuso del SVG sprite para íconos (completo, igual a index.html) -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false">
+      <symbol id="icon-home" viewBox="0 0 24 24">
+        <path d="m3 11 9-8 9 8" />
+        <path d="M5 10v10h5v-6h4v6h5V10" />
+      </symbol>
+      <symbol id="icon-briefcase" viewBox="0 0 24 24">
+        <path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1" />
+        <path d="M4 7h16v13H4z" />
+        <path d="M4 12h16" />
+        <path d="M9 12v2h6v-2" />
+      </symbol>
+      <symbol id="icon-education" viewBox="0 0 24 24">
+        <path d="m3 8 9-5 9 5-9 5z" />
+        <path d="M7 10v5c0 2 2 4 5 4s5-2 5-4v-5" />
+      </symbol>
+      <symbol id="icon-folder" viewBox="0 0 24 24">
+        <path d="M3 6h7l2 3h9v10H3z" />
+      </symbol>
+      <symbol id="icon-award" viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4" />
+        <path d="m8 14-2 7 6-3 6 3-2-7" />
+      </symbol>
+      <symbol id="icon-send" viewBox="0 0 24 24">
+        <path d="m21 3-7 18-4-8-7-3z" />
+        <path d="m21 3-11 10" />
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path d="M4 5h16v14H4z" />
+        <path d="m4 7 8 6 8-6" />
+      </symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24">
+        <path d="M12 3v12" />
+        <path d="m7 10 5 5 5-5" />
+        <path d="M5 21h14" />
+      </symbol>
+      <symbol id="icon-code" viewBox="0 0 24 24">
+        <path d="m8 8-4 4 4 4" />
+        <path d="m16 8 4 4-4 4" />
+        <path d="m14 4-4 16" />
+      </symbol>
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 12h9" />
+        <path d="m18 6 3-3" />
+      </symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3" />
+        <circle cx="17" cy="10" r="2.5" />
+        <path d="M3 19c1-4 4-6 6-6s5 2 6 6" />
+        <path d="M14 16c1-2 3-3 5-3s3 1 4 3" />
+      </symbol>
+      <symbol id="icon-brain" viewBox="0 0 24 24">
+        <path d="M9 4a3 3 0 0 0-3 3v1a3 3 0 0 0-2 3 3 3 0 0 0 2 3v1a3 3 0 0 0 3 3" />
+        <path d="M15 4a3 3 0 0 1 3 3v1a3 3 0 0 1 2 3 3 3 0 0 1-2 3v1a3 3 0 0 1-3 3" />
+        <path d="M9 4v16" />
+        <path d="M15 4v16" />
+        <path d="M9 10h6" />
+        <path d="M9 14h6" />
+      </symbol>
+      <symbol id="icon-monitor-code" viewBox="0 0 24 24">
+        <path d="M3 5h18v12H3z" />
+        <path d="M8 21h8" />
+        <path d="M12 17v4" />
+        <path d="m10 9-2 2 2 2" />
+        <path d="m14 9 2 2-2 2" />
+      </symbol>
+      <symbol id="icon-headset" viewBox="0 0 24 24">
+        <path d="M4 13a8 8 0 0 1 16 0" />
+        <path d="M4 13v4a2 2 0 0 0 2 2h2v-6H6a2 2 0 0 0-2 2" />
+        <path d="M20 13v4a2 2 0 0 1-2 2h-2v-6h2a2 2 0 0 1 2 2" />
+        <path d="M14 21h-3" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 20h16" />
+        <path d="M6 17v-5" />
+        <path d="M12 17V8" />
+        <path d="M18 17V5" />
+        <path d="m14 7 4-4 3 3" />
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="m13 6 6 6-6 6" />
+      </symbol>
+      <symbol id="icon-github" viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 0 0-3 19" />
+        <path d="M15 21a10 10 0 0 0 7-9 10 10 0 0 0-10-10" />
+        <path d="M9 18v-2c-3 1-4-1-5-3" />
+        <path d="M15 18v-3c0-1-.3-1.8-1-2.3 3-.3 5-1.5 5-5.2 0-1.2-.4-2.2-1.1-3" />
+      </symbol>
+    </svg>
+
+    <div class="portfolio-shell">
+      <aside class="sidebar" aria-label="Navegacion del portafolio">
+        <a class="brand" href="../index.html" aria-label="Inicio"><span>B</span><span>R</span></a>
+        <span class="brand-dot" aria-hidden="true"></span>
+
+        <nav class="side-nav">
+          <a class="side-link" href="../index.html#inicio">
+            <svg class="icon"><use href="#icon-home" /></svg>
+            <span>Inicio</span>
+          </a>
+          <a class="side-link is-active" href="#experiencia">
+            <svg class="icon"><use href="#icon-briefcase" /></svg>
+            <span>Experiencia</span>
+          </a>
+          <a class="side-link" href="../index.html#educacion">
+            <svg class="icon"><use href="#icon-education" /></svg>
+            <span>Educación</span>
+          </a>
+          <a class="side-link" href="../index.html#proyectos">
+            <svg class="icon"><use href="#icon-folder" /></svg>
+            <span>Proyectos</span>
+          </a>
+          <a class="side-link" href="../index.html#certificaciones">
+            <svg class="icon"><use href="#icon-award" /></svg>
+            <span>Certificaciones</span>
+          </a>
+        </nav>
+
+        <div class="theme-control" aria-label="Cambiar tema">
+          <span aria-hidden="true">☾</span>
+          <button class="theme-toggle" type="button" aria-label="Cambiar tema"><span></span></button>
+          <span aria-hidden="true">☼</span>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-actions" aria-label="Enlaces rapidos">
+          <a class="social-link" href="https://github.com/metalme" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <svg class="icon"><use href="#icon-github" /></svg>
+          </a>
+          <a class="social-link" href="mailto:brayanrincon069@gmail.com" aria-label="Correo electrónico">
+            <svg class="icon"><use href="#icon-mail" /></svg>
+          </a>
+          <a class="download-button" href="../assets/documents/Brayan Alexander Rincon Martinez.pdf" download aria-label="Descargar CV">
+            <svg class="icon"><use href="#icon-download" /></svg>
+            Descargar CV
+          </a>
+        </header>
+
+        <!-- Contenido principal de experiencias (SkillTree + Growth) -->
+        <section class="skill-tree-section" id="experiencia">
+          <div class="skill-tree-wrap">
+            <div style="margin-bottom:28px;">
+                <p class="section-kicker">// Technical Growth</p>
+              <h2 style="color:var(--text);">Evolución Técnica</h2>
+            </div>
+
+
+
+            <div id="nodesContainer">
+              <div class="skill-node" data-offset="0">
+                <div class="node-dot" aria-hidden="true"></div>
+                <div class="skill-card">
+                  <span style="font-size:12px;color:#06b6d4;font-weight:700;">NIVEL 1 // OPERACIONES BASE</span>
+                  <h3>Operación de Sistemas y Hardware <small style="color:var(--muted); font-weight:600;">[Centro Empresarial Autana | 2018]</small></h3>
+                  <p>Fundamentos técnicos operando múltiples sistemas de registro (CRM) en entorno de call center, supervisión técnica de sistemas de hardware audiovisual y proyección cinematográfica, gestión de datos y soporte a usuarios.</p>
+                  <div style="margin-top:10px;">
+                    <span class="tech-badge">Sistemas Informáticos</span>
+                    <span class="tech-badge">Troubleshooting AV</span>
+                    <span class="tech-badge">Gestión de Datos</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-node" data-offset="1">
+                <div class="node-dot" aria-hidden="true"></div>
+                <div class="skill-card">
+                  <span style="font-size:12px;color:#06b6d4;font-weight:700;">NIVEL 2 // ARQUITECTURA</span>
+                  <h3>Modelado de Bases de Datos Relacionales <small style="color:var(--muted); font-weight:600;">[ASM Business | 2025]</small></h3>
+                  <p>Evolución hacia la arquitectura de software. Diseño, optimización y estructuración profunda de modelos de bases de datos para proyectos tecnológicos.</p>
+                  <div style="margin-top:10px;">
+                    <span class="tech-badge">MySQL</span>
+                    <span class="tech-badge">Diseño Relacional</span>
+                    <span class="tech-badge">Optimización</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skill-node" data-offset="2">
+                <div class="node-dot" aria-hidden="true"></div>
+                <div class="skill-card">
+                  <span style="font-size:12px;color:#06b6d4;font-weight:700;">NIVEL 3 // FULL-STACK & DEPLOYMENT</span>
+                  <h3>Desarrollador de Software Junior <small style="color:var(--muted); font-weight:600;">[ASM Business | 2025 - 2026]</small></h3>
+                  <p>Colaboración activa en el ciclo de desarrollo completo. Implementación de soluciones frontend/backend y despliegue continuo de nuevas funcionalidades a producción.</p>
+                  <div style="margin-top:10px;">
+                    <span class="tech-badge">React</span>
+                    <span class="tech-badge">Node.js</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Despliegues</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Growth -->
+            <div class="growth-grid">
+              <div>
+                <div style="margin-bottom:18px;border-bottom:1px solid rgba(84,132,205,0.08);padding-bottom:10px;">
+                  <h3 style="color:#a78bfa;font-size:12px;letter-spacing:0.12em;">// Passive Skills</h3>
+                  <h2 style="color:var(--text);">Atributos Base</h2>
+                </div>
+
+                <div class="perks-grid">
+                  <div class="perk">
+                    <div class="icon">⚡</div>
+                    <h4 style="color:var(--text);margin:6px 0;">Gestión de Flujos y Cuellos de Botella</h4>
+                    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Origin: Operaciones y Logística</div>
+                    <p style="color:var(--soft);font-size:14px;">Capacidad demostrada para coordinar flujos de trabajo interdisciplinarios, minimizar tiempos de espera y tomar decisiones críticas en entornos de alta presión.</p>
+                  </div>
+
+                  <div class="perk">
+                    <div class="icon">💬</div>
+                    <h4 style="color:var(--text);margin:6px 0;">Comunicación y Resolución de Conflictos</h4>
+                    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Origin: Atención al Cliente (SLA)</div>
+                    <p style="color:var(--soft);font-size:14px;">Desarrollo de escucha activa y empatía para entender las necesidades del usuario final, garantizando el cumplimiento de protocolos y la calidad del servicio.</p>
+                  </div>
+
+                  <div class="perk">
+                    <div class="icon">🎯</div>
+                    <h4 style="color:var(--text);margin:6px 0;">Precisión y Atención al Detalle</h4>
+                    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Origin: Restaurante y AV</div>
+                    <p style="color:var(--soft);font-size:14px;">Excelencia en tareas críticas donde el error cero es esencial: coordinación de platos, sistemas audiovisuales y cumplimiento de protocolos técnicos.</p>
+                  </div>
+
+                  <div class="perk">
+                    <div class="icon">🚀</div>
+                    <h4 style="color:var(--text);margin:6px 0;">Aprendizaje Rápido y Adaptabilidad</h4>
+                    <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;">Origin: Trayectoria Multisectorial</div>
+                    <p style="color:var(--soft);font-size:14px;">Capacidad probada para dominar nuevas tecnologías, sistemas y metodologías en corto tiempo, aplicable a desarrollo software y arquitectura.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div style="margin-bottom:18px;border-bottom:1px solid rgba(84,132,205,0.08);padding-bottom:10px;">
+                  <h3 style="color:#4ade80;font-size:12px;letter-spacing:0.12em;">// Active Quest</h3>
+                  <h2 style="color:var(--text);">Estado Actual</h2>
+                </div>
+
+                <div style="padding:24px;border-radius:14px;background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(10,100,60,0.08));border:2px solid rgba(34,197,94,0.22);box-shadow:0 8px 32px rgba(16,185,129,0.08);">
+                  <div style="position:relative;overflow:hidden;border-radius:12px;padding:14px">
+                    <div style="display:inline-block;padding:8px 12px;background:rgba(16,185,129,0.12);color:#10b981;font-size:12px;font-weight:700;border-radius:8px;border:1px solid rgba(16,185,129,0.25);margin-bottom:14px;">[UNLOCKED: 16 JUN 2026] ✓</div>
+                    <h4 style="color:#10b981;margin:8px 0 14px;font-size:18px;font-weight:800;">⚡ Etapa Productiva: Desarrollo de Software</h4>
+                    <p style="color:var(--soft);margin-bottom:14px;font-size:15px;line-height:1.6;">Habilitación activa para prácticas profesionales. Aplicación integral de arquitectura de bases de datos, despliegue cloud y lógica de programación en un entorno corporativo.</p>
+
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Árbol de Experiencias Laborales -->
+          <div style="margin-top:90px;border-top:1px solid rgba(84,132,205,0.08);padding-top:60px;">
+            <div style="margin-bottom:28px;">
+              <p class="section-kicker">// Labor History</p>
+              <h2 style="color:var(--text);">Experiencias Laborales</h2>
+            </div>
+
+            <div style="max-width:900px;margin:0 auto;">
+              <div class="work-card">
+                <span>🍽️ Restaurante</span>
+                <h4>Expeditor en Área de Restaurante</h4>
+                <ul>
+                  <li><strong>Coordinación de salida:</strong> Supervisión de platos garantizando puntualidad, presentación y cumplimiento de estándares de calidad.</li>
+                  <li><strong>Flujo de trabajo:</strong> Optimización constante de procesos entre cocina, repostería y meseros para reducir tiempos de espera.</li>
+                  <li><strong>Comunicación:</strong> Coordinación efectiva con múltiples equipos para cumplir objetivos de turno.</li>
+                  <li><strong>Control de platos:</strong> Verificación de temperatura, presentación y completitud antes de envío a cliente.</li>
+                  <li><strong>Logro:</strong> Reducción de demoras y mejora en satisfacción del comensal mediante optimización de procesos.</li>
+                </ul>
+                <div class="work-meta"><strong>El Burlador Mediterráneo</strong> (Cartagena, Colombia) | Sep. 2023 – Actualidad</div>
+              </div>
+
+              <div class="work-card">
+                <span>🎬 Audiovisual</span>
+                <h4>Empleado General de Cine / Auxiliar de Operaciones</h4>
+                <ul>
+                  <li><strong>Supervisión técnica:</strong> Monitoreo y control de sistemas de sonido y proyección para garantizar experiencia de calidad.</li>
+                  <li><strong>Preventive maintenance:</strong> Inspección diaria de equipos audiovisuales y resolución rápida de problemas técnicos.</li>
+                  <li><strong>Atención al cliente:</strong> Operación de taquilla, venta de concesiones y orientación a clientes.</li>
+                  <li><strong>Gestión de efectivo:</strong> Manejo de transacciones, arqueo de caja y control de inventario de concesiones.</li>
+                  <li><strong>Seguridad:</strong> Protocolos de evacuación, revisión de salas y eventos especiales sin incidentes.</li>
+                </ul>
+                <div class="work-meta"><strong>Salas de Sonido y Audio Visual Cinex</strong> (Miranda, Venezuela) | Mar. 2018 – Jun. 2018</div>
+              </div>
+
+              <div class="work-card">
+                <span>📞 Call Center</span>
+                <h4>Operador Integral / Operador Telefónico</h4>
+                <ul>
+                  <li><strong>Gestión de llamadas:</strong> Manejo de volumen alto de llamadas entrantes/salientes con tiempos de respuesta optimizados.</li>
+                  <li><strong>Sistemas CRM:</strong> Operación de plataforma de seguimiento de casos, registro de datos y actualización de información de clientes.</li>
+                  <li><strong>Ventas y encuestas:</strong> Participación en campañas de venta, actualización de datos y recopilación de feedback de clientes.</li>
+                  <li><strong>Escucha activa:</strong> Desarrollo de empatía y comprensión de necesidades del cliente para resolución efectiva.</li>
+                  <li><strong>Cumplimiento de SLA:</strong> Adherencia a protocolos de servicio, métricas de calidad y estándares de atención establecidos.</li>
+                </ul>
+                <div class="work-meta"><strong>Centro Empresarial Autana</strong> (Distrito Capital, Venezuela) | Oct. 2018 – Dic. 2018</div>
+              </div>
+
+              <div class="work-card">
+                <span>💻 TI / Soporte</span>
+                <h4>Soporte Técnico y Resolución de Problemas</h4>
+                <ul>
+                  <li><strong>Diagnóstico técnico:</strong> Análisis sistemático de incidencias de hardware/software para identificar raíz del problema.</li>
+                  <li><strong>Atención a usuarios:</strong> Comunicación clara con usuarios finales para entender problemas y proporcionar soluciones paso a paso.</li>
+                  <li><strong>Resolución de incidentes:</strong> Troubleshooting de redes, drivers, sistemas operativos y aplicaciones empresariales.</li>
+                  <li><strong>Documentación:</strong> Registro detallado de casos, soluciones aplicadas y lecciones aprendidas para mejorar procesos.</li>
+                  <li><strong>Mejora continua:</strong> Identificación de patrones de problemas y propuesta de soluciones preventivas para optimizar calidad del soporte.</li>
+                </ul>
+                <div class="work-meta"><strong>Experiencia Acumulada</strong> | Soporte TI y asistencia técnica</div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+
+    <script>
+      // Theme toggle local
+      const themeToggleBtn = document.querySelector('.theme-toggle');
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+      }
+      
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.body.classList.toggle('light-mode');
+          localStorage.setItem(
+            'portfolio-theme',
+            document.body.classList.contains('light-mode') ? 'light' : 'dark'
+          );
+        });
+      }
+      
+      // Control de nodos con scroll
+      (function(){
+        const nodes = Array.from(document.querySelectorAll('.skill-node'));
+
+        // Revelar nodos con IntersectionObserver
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting){
+              e.target.classList.add('revealed');
+            }
+          });
+        },{threshold:0.12});
+        nodes.forEach(n=>io.observe(n));
+
+        // Animar barra de estado
+        const growthFill = document.getElementById('growthProgressFill');
+        function animateGrowth(){
+          if(!growthFill) return;
+          // animación simple: al entrar en vista, setear a 15%
+          const gWrap = document.querySelector('.growth-grid');
+          if(!gWrap) return;
+          const rect = gWrap.getBoundingClientRect();
+          if(rect.top < window.innerHeight && rect.bottom > 0){
+            growthFill.style.width = '15%';
+          }
+        }
+
+        window.addEventListener('scroll', animateGrowth, {passive:true});
+        // init
+        animateGrowth();
+
+        // Sincronizar estado 'is-active' del menú lateral para anclas locales
+        const sideLinks = document.querySelectorAll('.side-link');
+        const localSections = [...sideLinks]
+          .map(link => {
+            const href = link.getAttribute('href') || '';
+            if (href.startsWith('#')) return document.querySelector(href);
+            return null;
+          })
+          .filter(Boolean);
+
+        function setActiveLinkLocal() {
+          if (localSections.length === 0) return;
+          let currentSection = localSections[0];
+          localSections.forEach((section) => {
+            const box = section.getBoundingClientRect();
+            if (box.top <= 160) currentSection = section;
+          });
+
+          sideLinks.forEach((link) => {
+            const href = link.getAttribute('href') || '';
+            link.classList.toggle('is-active', href === `#${currentSection.id}`);
+          });
+        }
+
+        window.addEventListener('scroll', setActiveLinkLocal, { passive: true });
+        setActiveLinkLocal();
+      })();
+    </script>
+  </body>
+</html>
