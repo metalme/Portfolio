@@ -935,8 +935,80 @@ body.light-mode .theme-toggle span {
 }
 
 @media (max-width: 980px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 100px clamp(20px, 4vw, 40px) 70px;
+  }
+
+  .hero-visual {
+    min-height: auto;
+    margin-top: 40px;
+  }
+
+  .hero-visual::before,
+  .hero-visual::after,
+  .orbital-lines {
+    display: none;
+  }
+
+  .hero-visual img {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    display: block;
+    margin: 0 auto;
+    width: min(100%, 420px);
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+  }
+
+  .primary-action,
+  .secondary-action {
+    min-width: auto;
+    width: auto;
+  }
+
+  .skills-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: -24px auto 88px clamp(20px, 4vw, 40px);
+  }
+
+  .content-section {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-cta-card {
+    padding: 26px;
+  }
+
   .project-card {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .skills-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-section {
+    padding-top: 84px;
+  }
+
+  .top-actions {
+    position: static;
+    padding: 20px 24px 0;
+    justify-content: flex-end;
+    gap: 14px;
   }
 }
 
